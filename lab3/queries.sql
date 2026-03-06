@@ -87,7 +87,7 @@ FROM customers c
 JOIN orders o ON c.customer_id = o.customer_id
 GROUP BY c.customer_id, customer_name
 ORDER BY total_spent DESC
-LIMIT 5
+LIMIT 5;
 
 SELECT p.product_id,
        p.product_name,
