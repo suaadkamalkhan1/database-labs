@@ -79,3 +79,32 @@ ORDER BY total_amount DESC
 LIMIT 15;
 
 
+SELECT c.customer_id,
+       c.first_name || ' ' || c.last_name AS customer_name,
+       SUM(o.total_amount) AS total_spent,
+       COUNT(o.order_id) AS num_orders
+FROM customers c
+JOIN orders o ON c.customer_id = o.customer_id
+GROUP BY c.customer_id, customer_name
+ORDER BY total_spent DESC
+LIMIT 5
+
+SELECT p.product_id,
+       p.product_name,
+       p.category,
+       SUM(oi.quantity) AS total_units_sold,
+       SUM(oi.quantity * oi.unit_price) AS revenue_generated
+FROM order_items oi
+JOIN products p ON oi.product_id = p.product_id
+GROUP BY p.product_id, p.product_name, p.category
+ORDER BY total_units_sold DESC
+LIMIT 10;
+
+SELECT c.city,
+       COUNT(o.order_id) AS num_orders,
+       ROUND(AVG(o.total_amount), 2) AS avg_order_value
+FROM customers c
+JOIN orders o ON c.customer_id = o.customer_id
+GROUP BY c.city
+ORDER BY avg_order_value DESC
+LIMIT 10;
